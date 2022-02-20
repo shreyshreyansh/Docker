@@ -9,7 +9,7 @@ Docker uses a **client-server architecture**. The Docker ***client*** talks to
 `docker version` - *this command simply returns the version of the docker cli and the server also called as docker engine*
 
 ```powershell
-shrey@Asus >> **docker version**
+>> docker version
 Client:
  Cloud integration: v1.0.22
  Version:           20.10.11
@@ -60,7 +60,7 @@ A Docker *registry* stores Docker images. Docker Hub is a public registry that
 `docker info` - *shows details about the configurations and setup for our docker-engine* 
 
 ```powershell
-shrey@Asus >> **docker info**
+>> docker info
 Client:
  Context:    default
  Debug Mode: false
@@ -116,10 +116,9 @@ Server:
  Live Restore Enabled: false
 ```
 
-<aside>
-🗒️ ***Note:*** Docker’s ***old command*** format was *`docker <command> (options)`* (still works) but it’s ***new management command*** format is `*docker <command> <sub-command> (options)`* E.g: **Old:** *docker run <container_identifier>*                                                                              **New:** *docker container run <container_identifier>*
-
-</aside>
+🗒️ Note: <br/>
+Docker’s old command format was `docker <command> (options)` (still works) but it’s new management command format is `docker <command> <sub-command> (options)` <br/>
+E.g: Old: docker run <container_identifier> New: docker container run <container_identifier>
 
 ### **Containers**
 
@@ -129,13 +128,12 @@ By default, a container is relatively well isolated from other containers and it
 
 A container is defined by its image as well as any configuration options you provide to it when you create or start it. When a container is removed, any changes to its state that are not stored in persistent storage disappear.
 
-<aside>
-💡 ***Note***: Containers are not Mini VMs. It is just a process that runs on the host machine and is limited to what resources they can access and exists when the process stops.
 
-</aside>
+💡 Note: <br/> 
+Containers are not Mini VMs. It is just a process that runs on the host machine and is limited to what resources they can access and exists when the process stops. <br/>
 
 ```powershell
-shrey@Asus >> **docker container run --publish 8080:80 --detach nginx**
+>> docker container run --publish 8080:80 --detach nginx
 Unable to find image 'nginx:latest' locally
 latest: Pulling from library/nginx
 a2abf6c4d29d: Pull complete
@@ -152,7 +150,7 @@ In the background docker server first looks for the image in the image cache nam
 ![Screenshot 2022-01-18 143433.jpg](Docker%200991d/Screenshot_2022-01-18_143433.jpg)
 
 ```powershell
-shrey@Asus >> **docker container ls**
+>> docker container ls
 CONTAINER ID     IMAGE     COMMAND                    CREATED             STATUS         PORTS                 NAMES
 c95a34a4309f     nginx     "/docker-entrypoint.…"     7 seconds ago       Up 6 seconds   0.0.0.0:80->80/tcp    gracious_carson
 ```
@@ -160,7 +158,7 @@ c95a34a4309f     nginx     "/docker-entrypoint.…"     7 seconds ago       Up 6
 Lists the containers running on the host machine
 
 ```powershell
-shrey@Asus >> **docker container ls -a**
+>> docker container ls -a
 CONTAINER ID   IMAGE                        COMMAND                  CREATED        STATUS                      PORTS     NAMES
 85a598792e52   ekatvam/midasbackend:0.1.0   "docker-entrypoint.s…"   47 hours ago   Exited (137) 47 hours ago             compassionate_margulis
 ```
@@ -168,21 +166,19 @@ CONTAINER ID   IMAGE                        COMMAND                  CREATED    
 Lists the containers running or stopped on the host machine
 
 ```powershell
-shrey@Asus >> **docker container stop c95**
+>> docker container stop c95
 c95
 ```
 
 Stops a running container.
 
-<aside>
-💡 ***Note***: You don’t need to give a full id of the container. Specifying the first character to make the container identifiable is sufficient.
-
-</aside>
+💡 Note: <br/> 
+You don’t need to give a full id of the container. Specifying the first character to make the container identifiable is sufficient. <br/>
 
 ```powershell
-shrey@Asus >> **docker container run -p 80:80 -d --name webhost nginx**
+>> docker container run -p 80:80 -d --name webhost nginx
 675b020477cb9b93635823ff52d5d4a23b0ac0a6b2d6bf90eae1a70b2d30839b
-****shrey@Asus >> **docker container ls**
+>> docker container ls
 CONTAINER ID    IMAGE    COMMAND                  CREATED          STATUS          PORTS                 NAMES
 675b020477cb    nginx    "/docker-entrypoint.…"   5 seconds ago    Up 4 seconds    0.0.0.0:80->80/tcp    webhost
 ```
@@ -190,7 +186,7 @@ CONTAINER ID    IMAGE    COMMAND                  CREATED          STATUS       
 Run an nginx container with name as WebHost on port 80 in detached mode
 
 ```powershell
-shrey@Asus >> **docker container logs webhost**
+>> docker container logs webhost
 /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
 /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
 /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
@@ -212,7 +208,7 @@ shrey@Asus >> **docker container logs webhost**
 Shows the **logs** of the container
 
 ```powershell
-shrey@Asus >> **docker container top webhost**
+>> docker container top webhost
 PID    USER   TIME    COMMAND
 886    root   0:00    nginx: master process nginx -g daemon off;
 947    101    0:00    nginx: worker process
@@ -228,38 +224,34 @@ PID    USER   TIME    COMMAND
 Shows all the **running processes** inside a container
 
 ```powershell
-shrey@Asus >> **docker container rm c95**
+>> docker container rm c95
 c95
 ```
 
 Removes the stopped container.
 
-<aside>
-💡 ***Note***: Show an error if we are trying to remove a running container. To remove a running container directly use the `-f` flag. E.g, `docker container rm -f c95`
-
-</aside>
+💡Note: <br/> 
+ Show an error if we are trying to remove a running container. To remove a running container directly use the `-f` flag. E.g, `docker container rm -f c95`
 
 ```powershell
-shrey@Asus >> **docker container inspect webhost**
+>> docker container inspect webhost
 ```
 
 Shows metadata about container startup-config, volumes, networking, etc.
 
 ```powershell
-shrey@Asus >> **docker container stats webhost**
+>> docker container stats webhost
 CONTAINER ID      NAME      CPU %     MEM USAGE / LIMIT      MEM %    NET I/O    BLOCK I/O        PIDS
 675b020477cb      webhost   0.00%     10.41MiB / 31.42GiB    0.03%    0B / 0B    1.78MB / 24.6kB  9
 ```
 
 Shows the **streaming view** of **live** container stats. 
 
-<aside>
-💡 Note: We do not need an SSH server inside a container to SSH into the container. Docker provides several commands at our disposal that let us get a shell inside the container itself while it is running.
-
-</aside>
+💡 Note: <br/> 
+We do not need an SSH server inside a container to SSH into the container. Docker provides several commands at our disposal that let us get a shell inside the container itself while it is running. <br/>
 
 ```powershell
-shrey@Asus >> **docker container run -it --name proxy nginx bash**
+>> docker container run -it --name proxy nginx bash
 docker container run -it --name proxy nginx bash
 root@f20fa0be1b38:/# ls
 bin docker-entrypoint.d home media proc sbin tmp
@@ -271,7 +263,7 @@ root@f20fa0be1b38:/#
 `-it` has two separate options, `-t` allocates us a pseudo-TTY(**stimulates a real terminal like SSH does**) `-i` keeps the **STDIN** open to receive terminal input. Here `bash` is the optional argument that is passed to the container to tell what to run (bash is the most common shell that we can usually find in the container). When running the Nginx container in default settings, it runs the Nginx program itself but when we run the last command we changed that command to run bash so on exiting the bash shell the container automatically stops.
 
 ```powershell
-shrey@Asus >> **docker container start -ai proxy**
+>> docker container start -ai proxy
 root@f20fa0be1b38:/# ls
 bin docker-entrypoint.d home media proc sbin tmp
 boot docker-entrypoint.sh lib mnt root srv usr
@@ -281,43 +273,41 @@ dev etc lib64 opt run sys var
 Reruns the stopped container with the bash init. 
 
 ```powershell
-shrey@Asus >> **docker container exec -it webhost bash**
+>> docker container exec -it webhost bash
 ```
 
 Runs a command in the running container. Exiting the bash doesn’t stop the container as one process of Nginx(Nginx process itself) is still running.
 
-<aside>
-💡 ***Note***: Alpine image is another **Linux** distribution image that is very small with respect to other Linux distributions as it doesn’t have a bash shell preinstalled in the image.
-
-</aside>
+💡 Note: <br/> 
+Alpine image is another **Linux** distribution image that is very small with respect to other Linux distributions as it doesn’t have a bash shell preinstalled in the image.
+<br/>
 
 Whenever we start a container, the docker in the background connects that container to a particular virtual network (**bridge/docker0: default network**). Each virtual network in the docker routes through the NAT firewall on the host IP(i.e, docker daemon configuring the host IP address on the default interface so that its containers can access the internet or to the rest of the other virtual networks). 
 
 All containers on the same virtual network do not need to expose their port, to communicate. We can attach the container to more than one virtual network (or none). We can skip the virtual network configuration for the container which comes out of the box and use the host IP with the   `--net=host` flag.
 
 ```powershell
-shrey@Asus >> **docker container port webhost**
+>> docker container port webhost
 80/tcp -> 0.0.0.0:80
 ```
 
 Shows which ports are forwarding traffic to that container
 
 ```powershell
-shrey@Asus >> **docker container inspect --format '{{.NetworkSettings.IPAddress}}' webhost**
+>> docker container inspect --format '{{.NetworkSettings.IPAddress}}' webhost
 172.17.0.2
 ```
 
 Shows the IP address of the container. Here we can use the inspect command to look into the configuration of the container and `--format` flag act as a grep tool and find the **NetworkSettings.IPAddress** from the inspect result which is the container’s IP address
 
-<aside>
-💡 ***Note***: IP Address of the container doesn’t match the IP address of the host.
-
-</aside>
+💡 Note: <br/>
+IP Address of the container doesn’t match the IP address of the host.
+<br/>
 
 ![Screenshot 2022-01-18 231729.jpg](Docker%200991d/Screenshot_2022-01-18_231729.jpg)
 
 ```powershell
-shrey@Asus >> **docker network ls**
+>> docker network ls
 NETWORK ID     NAME     DRIVER    SCOPE
 fbcdd1527ffb   bridge   bridge    local
 ff556f292cc8   host     host      local
@@ -327,15 +317,15 @@ ff556f292cc8   host     host      local
 Lists all the network that has been created. Here `bridge` is the default docker virtual network which is NAT’ed behind the host IP. So while running a container, if we do not specify the network then the container is connected to the bridge network (also called docker0) by default. `host` is the network for the container which uses `--net=host` flag which skips the virtual networking of docker and attaches the container directly to the host interface. `none` removes eth0 and leaves you with a localhost interface on the container.
 
 ```powershell
-shrey@Asus >> **docker network inspect bridge**
+>> docker network inspect bridge
 ```
 
 Shows the metadata of the network such as the subnet of the network, the gateway of the network, list of containers which is connected to the network, etc.
 
 ```powershell
-shrey@Asus >> **docker network create my_app_net**
+>> docker network create my_app_net
 9f769d238db9381e0a8dfd04e0b61879c4a78008619600f0e045e55401ae8132
-shrey@Asus >> **docker network ls**
+>> docker network ls
 NETWORK ID     NAME         DRIVER     SCOPE
 fbcdd1527ffb   bridge       bridge     local
 ff556f292cc8   host         host       local
@@ -346,20 +336,20 @@ ff556f292cc8   host         host       local
 Spawns a new virtual network. We can see that `my_app_net` was created with the driver of the `bridge`(because it is the default driver).
 
 ```powershell
-shrey@Asus >> **docker container run -d --name new_nginx --network my_app_net nginx**
+>> docker container run -d --name new_nginx --network my_app_net nginx
 3582f84ad7f97e4d2b17d344bf669651352d62a893ab5c48ab6b990e61d2bcaa
 ```
 
 Creates an Nginx container `new_nginx` and attach the container to the `my_app_net` network.
 
 ```powershell
-shrey@Asus >> **docker network connect my_app_net webhost**
+>> docker network connect my_app_net webhost
 ```
 
 Dynamically creates a NIC in a container for an existing virtual network. Now the webhost container is on two networks: the first is the bridge/docker0 and the second is the my_app_net.
 
 ```powershell
-shrey@Asus >> **docker network disconnect my_app_net webhost**
+>> docker network disconnect my_app_net webhost
 ```
 
 Removes the NIC from the container to disconnect from that virtual network.
@@ -368,14 +358,11 @@ Removes the NIC from the container to disconnect from that virtual network.
 
 Docker daemon has a built-in DNS server that containers use by default. On creating a custom network that is not the default bridge network, it actually gets a special new feature which is automatic DNS resolution for all the containers on that virtual network using their ***containers’ name***. 
 
-<aside>
-💡 ***Note***: Docker defaults the hostname to the container’s name, but you can also set the aliases.
-
-</aside>
+💡 Note:<br/> Docker defaults the hostname to the container’s name, but you can also set the aliases.<br/>
 
 ```powershell
-shrey@Asus >> **docker container run -d --net sample_net --net-alias search elasticsearch:2**
-shrey@Asus >> **docker container run -d --net sample_net --net-alias search elasticsearch:2**
+>> docker container run -d --net sample_net --net-alias search elasticsearch:2
+>> docker container run -d --net sample_net --net-alias search elasticsearch:2
 ```
 
 There are two containers running on the same alias. So if another container on the same network pings ***search*** then it will follow ***DNS round-robin i.e,*** the ping request to the search will be distributed between those two containers in a round-robin fashion.
@@ -391,37 +378,33 @@ You might create your own images or you might only use those created by others a
 Here `1.21.5`, `mainline`, `1`, `1.21` and the `latest` tag represent the same version of the image.
 
 ```powershell
-shrey@Asus >> **docker pull nginx**
+>> docker pull nginx
 Using default tag: latest
-shrey@Asus >> **docker pull nginx:1.21.5**
+>> docker pull nginx:1.21.5
 ```
 
 The second command doesn’t even pull the image from the registry as it is present in the local image cache from the first command. Running the **docker image ls** command will show two images with tags `latest` and `1.21.5` but it is actually one image as they both have the same image id.
 
 ```powershell
-shrey@Asus >> **docker image history nginx:latest**
+>> docker image history nginx:latest
 ```
 
 Shows layer of changes made to an image. Any change which happens to the image forms another layer. These layers can be cached to make the building of the container on top of the image faster.
 
-Visualizing image layers in docker (**watch 3:18 - 9:12**)
-
-[](https://tm.udemy.com/course/docker-mastery/learn/lecture/6771524)
-
 ```powershell
-shrey@Asus >> **docker image tag nginx shreyansh/nginx**
+>> docker image tag nginx shreyansh/nginx
 ```
 
 Adds a new tag to the existing image.
 
 ```powershell
-shrey@Asus >> **docker login <server>**
+>> docker login <server>
 ```
 
 Defaults to login to the Hub, but you can override by adding server URI.
 
 ```powershell
-shrey@Asus >> **docker logout**
+>> docker logout
 ```
 
 Logout of the server.
@@ -430,10 +413,7 @@ Logout of the server.
 
 *A recipe for creating a docker image*
 
-<aside>
-💡 ***Note***: By default, we build an image from the ***Dockerfile*** using`docker build .` but if we want to build an image from some other file then we can run `docker build -f some-dockerfile`
-
-</aside>
+💡 Note:<br/> By default, we build an image from the ***Dockerfile*** using`docker build .` but if we want to build an image from some other file then we can run `docker build -f some-dockerfile`<br/>
 
 **Syntax**
 
@@ -494,7 +474,7 @@ CMD ["nginx", "-g", "daemon off;"]
 *Each of the stanzas in the above code is an actual layer in our docker image so their order matters as building an image work top-down.*
 
 ```powershell
-shrey@Asus >> **docker image build -t <name of the image> <location of the dockerfile>**
+>> docker image build -t <name of the image> <location of the dockerfile>
 ```
 
 Builds the image from the docker file with the custom name.
@@ -525,13 +505,13 @@ VOLUME /var/lib/mysql
 - *Prior way*
 
 ```powershell
-docker container run -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=True -v **/var/lib/mysql** mysql
+docker container run -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=True -v var/lib/mysql mysql
 ```
 
 - *Named way*
 
 ```powershell
-docker container run -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=True -v **mysql-db:/var/lib/mysql** mysql
+docker container run -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=True -v mysql-db:/var/lib/mysql mysql
 ```
 
 - `docker volume ls` will show a long string for the first way and the name of the volume for the second way
@@ -679,24 +659,24 @@ services:
 ```yaml
 version: "3"
 services:
-	web:
-		image: drupal
-		ports:
-      - "8080:80"
-		volumes:
-			- drupal-modules:/var/www/html/modules \
-      - drupal-profiles:/var/www/html/profiles \
-      - drupal-sites:/var/www/html/sites \
-      - drupal-themes:/var/www/html/themes
-	db:
-		image: postgres
-		environment:
-      POSTGRES_PASSWORD: example
+   web:
+     image: drupal
+     ports:
+       - "8080:80"
+     volumes:
+       - drupal-modules:/var/www/html/modules \
+       - drupal-profiles:/var/www/html/profiles \
+       - drupal-sites:/var/www/html/sites \
+       - drupal-themes:/var/www/html/themes
+   db:
+     image: postgres
+     environment:
+       POSTGRES_PASSWORD: example
 volumes:
-	drupal-modules:
-	drupal-profiles:
-	drupal-sites:
-	drupal-themes:
+  drupal-modules:
+  drupal-profiles:
+  drupal-sites:
+  drupal-themes:
 ```
 
 - for docker-compose clean-up, we can use `docker-compose down` and if we want to remove the volumes as well use `docker-compose down -v`
